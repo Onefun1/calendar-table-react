@@ -1,0 +1,9 @@
+.panel {
+  border-top: 5px dotted rgb(42, 40, 40);
+  padding-top: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 25px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}

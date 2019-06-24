@@ -1,0 +1,44 @@
+.calendar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 5px;
+}
+
+.calendar__thead {
+  font-weight: 800;
+  background-color: #ccc;
+}
+
+.calendar__thead,
+.calendar__tbody,
+.emptyCell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+  text-align: center;
+  line-height: 30px;
+
+  padding: 10px;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+.emptyCell {
+  background-color: rgb(245, 242, 242);
+}
+
+.today {
+  color: green;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 20px;
+}
+
+.calendar__tbody:hover {
+  box-shadow: 0 0 15px #ccc;
+  cursor: pointer;
+  background-color: rgb(235, 230, 230);
+  font-size: 20px;
+}
