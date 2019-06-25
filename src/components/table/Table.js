@@ -66,19 +66,23 @@ class Table extends Component {
   monthChangerDecrement() {
     const { date, months } = this.state;
     let counter = date[1];
+    console.log(counter - 1);
     this.setState({
-      daysAmount: new Date(date[0], counter + 1, 0).getDate(),
+      daysAmount: new Date(date[0], counter - 1, 0).getDate(),
       firstDay: new Date(date[0], counter, 0).getDay(),
       flag: false
     });
 
-    if (counter <= 0) {
-      counter = months.length + 1;
-      this.setState(prevState => (prevState.date[1] = counter));
-    }
-
     if (counter > 0) {
-      this.setState(prevState => (prevState.date[1] = --counter));
+      if (counter === months.length) {
+        this.setState(prevState => (prevState.date[1] = counter));
+      }
+      --counter;
+      this.setState(prevState => (prevState.date[1] = counter));
+      if (counter === 0) {
+        counter = months.length;
+        this.setState(prevState => (prevState.date[1] = counter));
+      }
     }
   }
 
@@ -108,9 +112,10 @@ class Table extends Component {
 
   openModal = e => {
     let target = e.target;
-    this.setState({ isOpen: true });
-    console.log(target);
-    return target.firstChild;
+    if (target.className !== "calendar") {
+      this.setState({ isOpen: true });
+      console.log(target.firstChild);
+    }
   };
 
   handleCancel = () => {
