@@ -1,2 +1,2 @@
 
-### [DOMO](https://onefun1.github.io/calendar-table-react/)
+### [DEMO](https://onefun1.github.io/calendar-table-react/)
