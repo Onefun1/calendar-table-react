@@ -14,9 +14,8 @@ class Table extends Component {
       today.getDate(),
       today.getDay()
     ];
-    let daysAmount = new Date(date[0], date[1], 0).getDate();
+    let daysAmountOfCurrentMonth = new Date(date[0], date[1], 0).getDate();
     let firstDayOfCurrentMonth = new Date(date[0], date[1] - 1, 0).getDay();
-    console.log(date[1]);
 
     this.state = {
       months: [
@@ -35,7 +34,7 @@ class Table extends Component {
       ],
       days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       date: date,
-      daysAmount: daysAmount,
+      daysAmount: daysAmountOfCurrentMonth,
       firstDay: firstDayOfCurrentMonth,
       currentMonth: date[1],
       flag: false,
@@ -44,13 +43,14 @@ class Table extends Component {
     };
   }
 
-  monthChangerIncrement() {
+  monthChanger = () => {
     const { date, months } = this.state;
     let counter = date[1];
-    this.setState({
-      daysAmount: new Date(date[0], counter + 1, 0).getDate(),
-      firstDay: new Date(date[0], counter, 0).getDay(),
-      flag: false
+
+    this.setState(prevState => {
+      prevState.daysAmount = new Date(date[0], counter + 1, 0).getDate();
+      prevState.firstDay = new Date(date[0], counter, 0).getDay();
+      prevState.flag = false;
     });
 
     if (counter === months.length) {
@@ -61,30 +61,7 @@ class Table extends Component {
     if (counter <= months.length - 1) {
       this.setState(prevState => (prevState.date[1] = ++counter));
     }
-  }
-
-  monthChangerDecrement() {
-    const { date, months } = this.state;
-    let counter = date[1];
-    console.log(counter - 1);
-    this.setState({
-      daysAmount: new Date(date[0], counter - 1, 0).getDate(),
-      firstDay: new Date(date[0], counter, 0).getDay(),
-      flag: false
-    });
-
-    if (counter > 0) {
-      if (counter === months.length) {
-        this.setState(prevState => (prevState.date[1] = counter));
-      }
-      --counter;
-      this.setState(prevState => (prevState.date[1] = counter));
-      if (counter === 0) {
-        counter = months.length;
-        this.setState(prevState => (prevState.date[1] = counter));
-      }
-    }
-  }
+  };
 
   backToReality() {
     const { date, currentMonth } = this.state;
@@ -96,12 +73,13 @@ class Table extends Component {
     this.setState(prevState => (prevState.date[1] = currentMonth));
 
     this.setState({
+      ...this.state,
       daysAmount: daysAmount,
       firstDay: firstDay,
       flag: true
     });
-    this.setState({
-      flag: false
+    this.setState(prevState => {
+      prevState.flag = false;
     });
   }
 
@@ -165,8 +143,7 @@ class Table extends Component {
       <>
         <Panel
           state={this.state}
-          click_Inkr={() => this.monthChangerIncrement()}
-          click_Decr={() => this.monthChangerDecrement()}
+          click={this.monthChanger}
           returnMonth={() => this.backToReality()}
         />
         <div className="calendar" onClick={this.openModal}>
